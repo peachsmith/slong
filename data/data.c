@@ -28,7 +28,8 @@ static sl_dbconfig remote_conf = {
 
 static int cleanup(MYSQL *con)
 {
-    if (con == NULL) return 1;
+    if (con == NULL)
+        return 1;
 
     fprintf(stderr, "ERROR: %s\n", mysql_error(con));
     mysql_close(con);
@@ -63,7 +64,8 @@ int sl_get_paddle_positions(int *p1, int *p2)
         conf->socket,
         0);
 
-    if (real == NULL) return cleanup(con);
+    if (real == NULL)
+        return cleanup(con);
 
     // execute query
     if (mysql_query(con, "SELECT * FROM paddles LIMIT 2"))
@@ -79,8 +81,11 @@ int sl_get_paddle_positions(int *p1, int *p2)
         const char *id_str = row[0];
         const char *pos_str = row[1];
 
-        if (strlen(id_str) > 1) return cleanup(con);
-        if (strlen(pos_str) > 2) return cleanup(con);
+        if (strlen(id_str) > 1)
+            return cleanup(con);
+            
+        if (strlen(pos_str) > 2)
+            return cleanup(con);
 
         *p1 = atoi(pos_str);
     }
@@ -91,8 +96,11 @@ int sl_get_paddle_positions(int *p1, int *p2)
         const char *id_str = row[0];
         const char *pos_str = row[1];
 
-        if (strlen(id_str) > 1) return cleanup(con);
-        if (strlen(pos_str) > 2) return cleanup(con);
+        if (strlen(id_str) > 1)
+            return cleanup(con);
+
+        if (strlen(pos_str) > 2)
+            return cleanup(con);
 
         *p2 = atoi(pos_str);
     }

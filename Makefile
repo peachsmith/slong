@@ -17,7 +17,7 @@ MAIN_DEF=/D"main=SDL_main"
 # When building on Windows, we will be connecting to the database remotely (on LAN).
 DEFS=/D"SLONG_REMOTE=1"
 
-SRC=*.c common/*.c entities/*.c input/*.c scenes/*.c data/*.c
+SRC=*.c common/*.c data/*.c entities/*.c input/*.c scenes/*.c
 
 all:
 	$(CC) $(CFLAGS) $(MAIN_DEF) $(DEFS) $(INCLUDE_DIR) $(SRC) /link $(LIBS) $(LINK_DIR) /SUBSYSTEM:WINDOWS -out:slong.exe

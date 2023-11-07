@@ -37,56 +37,6 @@
 #define CR_CAMERA_ALL 1
 
 /**
- * Draws various elements of a collision event on the screen.
- * This function is intended for debugging purposes.
- *
- * Params:
- *   cr_app* - a pointer to an app struct
- *   cr_rect* - reference to the target rectangle
- *   cr_t_res* - a reference to a collision result struct
- *   cr_point* - a reference to an origin point
- *   cr_point* - a reference to a direction vector
- */
-void util_draw_collision(
-    cr_app *app,
-    cr_rect *r,
-    cr_collision *res,
-    cr_point *p,
-    cr_point *d);
-
-/**
- * Draws various elements of SAT collision detection.
- *
- * Params:
- *   cr_app* - a pointer to an app struct
- *   cr_point* - an array of points for entity A
- *   cr_point* - an array of points for entity B
- */
-void util_draw_sat(
-    cr_app *app,
-    cr_point *pa,
-    cr_point *pb,
-    cr_point *n0,
-    cr_point *n1,
-    cr_point *q);
-
-/**
- * Draws the camera boundaries on the screen.
- *
- * Params:
- *   cr_app* - a pointer to an app struct
- */
-void util_draw_camera(cr_app *);
-
-/**
- * Draws the camera boundaries on the screen.
- *
- * Params:
- *   cr_app* - a pointer to an app struct
- */
-void util_draw_camera(cr_app *);
-
-/**
  * Sets the camera boundary configuration.
  *
  * Params:
@@ -107,11 +57,20 @@ void util_set_camera(cr_app *, int);
  */
 int util_is_on_screen(cr_app *, cr_entity *);
 
-void util_init_entities(cr_entity **);
+/**
+ * Initializes the entity array with default values.
+ *
+ * Params:
+ *   cr_entity* - a pointer to the first element of the entity array
+ */
+void util_init_entities(cr_entity *);
 
-void util_init_entity_types(
-    cr_entity_type *,
-    int (*get_x_vel)(cr_entity *),
-    int (*get_y_vel)(cr_entity *));
+/**
+ * Initializes the entity type array with default values.
+ *
+ * Params:
+ *   cr_entity_type* - a pointer to the first element of the entity type array
+ */
+void util_init_entity_types(cr_entity_type *);
 
 #endif

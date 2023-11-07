@@ -31,7 +31,8 @@ static int get_ball_y_vel(cr_entity *ball)
 
 static void render_ball(cr_app *app, cr_entity *ball)
 {
-    if (!util_is_on_screen(app, ball)) return;
+    if (!util_is_on_screen(app, ball))
+        return;
 
     cr_rect r = {
         .x = ball->x_pos,
@@ -46,7 +47,8 @@ static void render_ball(cr_app *app, cr_entity *ball)
 
 static void update_ball(cr_app *app, cr_entity *ball)
 {
-    if (app->ticks % 5) return;
+    if (app->ticks % 5)
+        return;
 
     cr_entity **handles = app->extension->entity_handles;
     int x_vel = app->entity_types[ball->type].get_x_vel(ball);
@@ -80,9 +82,14 @@ static void collide_ball(
     cr_entity *other,
     cr_collision *t_res)
 {
-    if (other->data) return;
-    if (t_res->cn.x) ball->x_vel = -ball->x_vel;
-    if (t_res->cn.y) ball->y_vel = -ball->y_vel;
+    if (other->data)
+        return;
+
+    if (t_res->cn.x)
+        ball->x_vel = -ball->x_vel;
+    
+    if (t_res->cn.y)
+        ball->y_vel = -ball->y_vel;
 }
 
 void sl_register_ball(cr_entity_type *t)
@@ -101,7 +108,8 @@ cr_entity *sl_create_ball(cr_app *app, int x, int y)
 {
     cr_entity *ball = NULL;
 
-    if ((ball = cr_create_entity(app)) == NULL) return NULL;
+    if ((ball = cr_create_entity(app)) == NULL)
+        return NULL;
 
     ball->type = SL_ENTITY_TYPE_BALL;
     ball->x_pos = x;

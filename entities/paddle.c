@@ -28,7 +28,8 @@ static void render_paddle(cr_app *app, cr_entity *paddle)
 
 static void update_paddle(cr_app *app, cr_entity *paddle)
 {
-    if (!paddle->data) return;
+    if (!paddle->data)
+        return;
 
     paddle->ticks++;
 
@@ -47,7 +48,8 @@ cr_entity *sl_create_paddle(cr_app *app, int x, int y)
 {
     cr_entity *paddle = NULL;
 
-    if ((paddle = cr_create_entity(app)) == NULL) return NULL;
+    if ((paddle = cr_create_entity(app)) == NULL)
+        return NULL;
 
     paddle->type = SL_ENTITY_TYPE_PADDLE;
     paddle->x_pos = x;

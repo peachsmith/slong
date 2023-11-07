@@ -37,7 +37,8 @@ static void render_court(cr_app *app, cr_entity *court)
         handles[SL_HANDLE_PLAYER_1]->cursor_x,
         handles[SL_HANDLE_PLAYER_1]->y_pos - 40);
 
-    if (res < 0 || res >= n) return;
+    if (res < 0 || res >= n)
+        return;
 
     cr_draw_text(app, font, buffer, 40, 2);
 
@@ -49,7 +50,8 @@ static void render_court(cr_app *app, cr_entity *court)
         handles[SL_HANDLE_PLAYER_2]->cursor_x,
         handles[SL_HANDLE_PLAYER_2]->y_pos - 40);
 
-    if (res < 0 || res >= n) return;
+    if (res < 0 || res >= n)
+        return;
 
     cr_draw_text(app, font, buffer, 138, 2);
 }
@@ -70,7 +72,8 @@ cr_entity *sl_create_court(cr_app *app)
 {
     cr_entity *court = NULL;
 
-    if ((court = cr_create_entity(app)) == NULL) return NULL;
+    if ((court = cr_create_entity(app)) == NULL)
+        return NULL;
 
     court->type = SL_ENTITY_TYPE_COURT;
 

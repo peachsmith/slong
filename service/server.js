@@ -1,14 +1,14 @@
-const express = require('express')
-const cors = require('cors')
-const { json } = require('body-parser')
-var mysql = require('mysql')
+import express from "express"
+import cors from "cors"
+import BodyParser from "body-parser"
+import mysql from "mysql"
 
 const app = express()
 app.use(cors())
-app.use(json())
+app.use(BodyParser.json())
 const port = 8080
 
-app.post('/move/player1', (req, res) => {
+app.post("/move/player1", (req, res) => {
 
     let resObj = {
         result: "success"
@@ -37,11 +37,11 @@ app.post('/move/player1', (req, res) => {
     console.log("setting player 1 position:", req.body.position)
 
     var connection = mysql.createConnection({
-        host: 'localhost',
+        host: "localhost",
         port: 3306,
-        user: 'player1',
-        password: 'password1',
-        database: 'slong',
+        user: "player1",
+        password: "password1",
+        database: "slong",
         socketPath: "/tmp/mysql.sock"
     })
 
@@ -57,7 +57,7 @@ app.post('/move/player1', (req, res) => {
     connection.end()
 })
 
-app.post('/move/player2', (req, res) => {
+app.post("/move/player2", (req, res) => {
     let resObj = {
         result: "success"
     }
@@ -85,11 +85,11 @@ app.post('/move/player2', (req, res) => {
     console.log("setting player 2 position:", req.body.position)
 
     var connection = mysql.createConnection({
-        host: 'localhost',
+        host: "localhost",
         port: 3306,
-        user: 'player2',
-        password: 'password2',
-        database: 'slong',
+        user: "player2",
+        password: "password2",
+        database: "slong",
         socketPath: "/tmp/mysql.sock"
     })
 
@@ -106,5 +106,9 @@ app.post('/move/player2', (req, res) => {
 })
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+    console.log(`Slong service listening on port ${port}`)
 })
+
+const SlongService = {}
+
+export default SlongService

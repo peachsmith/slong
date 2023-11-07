@@ -482,11 +482,6 @@ int common_swept_aabb(
 
     if (ray_v_rect(&p, &d, &r, res))
     {
-        if (app->debug.collisions)
-        {
-            util_draw_collision(app, &r, res, &p, &d);
-        }
-
         return 1;
     }
     else if (spur)

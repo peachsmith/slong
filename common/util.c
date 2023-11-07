@@ -2,6 +2,9 @@
 #include "common/collision.h"
 #include "entities/entity_types.h"
 
+static int  get_x_vel(cr_entity *e) { return e->x_vel; }
+static int  get_y_vel(cr_entity *e) { return e->y_vel; }
+
 void util_draw_collision(
     cr_app *app,
     cr_rect *r,
@@ -194,14 +197,38 @@ int util_is_on_screen(cr_app *app, cr_entity *entity)
     return common_is_overlapped(&screen_rect, &entity_rect, &o);
 }
 
-void util_init_entities(cr_entity **entities)
+void util_init_entities(cr_entity *entities)
 {
+    for (int i = 0; i < SL_MAX_ENTITIES; i++)
+    {
+        entities[i].present = 0;
+        entities[i].type = 0;
+        entities[i].x_pos = 0;
+        entities[i].y_pos = 0;
+        entities[i].x_vel = 0;
+        entities[i].y_vel = 0;
+        entities[i].x_acc = 0;
+        entities[i].y_acc = 0;
+        entities[i].x_t = 0;
+        entities[i].y_t = 0;
+        entities[i].flags = 0;
+        entities[i].data = 0;
+        entities[i].animation_ticks = 0;
+        entities[i].ticks = 0;
+        entities[i].iframes = 0;
+        entities[i].carrier = NULL;
+        entities[i].text = NULL;
+        entities[i].text_len = 0;
+        entities[i].tick_limit = 0;
+        entities[i].result = 0;
+        entities[i].cursor_x = 0;
+        entities[i].cursor_y = 0;
+        entities[i].scroll_x = 0;
+        entities[i].scroll_y = 0;
+    }
 }
 
-void util_init_entity_types(
-    cr_entity_type *entity_types,
-    int (*get_x_vel)(cr_entity *),
-    int (*get_y_vel)(cr_entity *))
+void util_init_entity_types(cr_entity_type *entity_types)
 {
     for (int i = 0; i < SL_ENTITY_TYPE_MAX; i++)
     {

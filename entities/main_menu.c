@@ -1,6 +1,5 @@
 #include "slong.h"
 #include "assets.h"
-#include "common/ui.h"
 #include "common/util.h"
 #include "entities/entity_types.h"
 
@@ -40,7 +39,8 @@ cr_entity *sl_create_main_menu(cr_app *app)
 {
     cr_entity *menu = NULL;
 
-    if ((menu = cr_create_entity(app)) == NULL) return NULL;
+    if ((menu = cr_create_entity(app)) == NULL)
+        return NULL;
 
     menu->type = SL_ENTITY_TYPE_MAIN_MENU;
     cr_set_flag(menu, ENTITY_FLAG_PAUSE);
