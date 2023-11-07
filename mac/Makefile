@@ -15,7 +15,7 @@ LIBS=-lmariadb -lcrumbs -framework SDL2 -framework SDL2_image -framework SDL2_tt
 # include the SDL header file.
 MAIN_DEF=-D_main=_SDL_main
 
-SRC=../*.c ../common/*.c ../entities/*.c ../input/*.c ../scenes/*.c ../util/*.c
+SRC=../*.c ../common/*.c ../entities/*.c ../input/*.c ../scenes/*.c ../data/*.c
 
 all:
 	$(CC) $(MAIN_DEF) $(SRC) -o slong $(INCLUDE_DIR) -mwindows $(LINK_DIR) $(LIBS)

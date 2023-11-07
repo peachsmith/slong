@@ -1,8 +1,6 @@
 #include "input/input.h"
 #include "scenes/scenes.h"
 
-#include <stdio.h>
-
 void sl_title_screen_input(cr_app *app)
 {
     if (cr_consume_input(app, CR_KEYCODE_ESCAPE))
@@ -34,10 +32,6 @@ void sl_playing_field_input(cr_app *app)
         return;
     }
 
-    //-------------------------------------------------
-    // BEGIN TEMP: debugging controls
     if (cr_peek_input(app, CR_KEYCODE_RIGHTBRACKET))
-    {
         handles[SL_HANDLE_PLAYER_2]->data = 1;
-    }
 }

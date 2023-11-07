@@ -193,3 +193,31 @@ int util_is_on_screen(cr_app *app, cr_entity *entity)
 
     return common_is_overlapped(&screen_rect, &entity_rect, &o);
 }
+
+void util_init_entities(cr_entity **entities)
+{
+}
+
+void util_init_entity_types(
+    cr_entity_type *entity_types,
+    int (*get_x_vel)(cr_entity *),
+    int (*get_y_vel)(cr_entity *))
+{
+    for (int i = 0; i < SL_ENTITY_TYPE_MAX; i++)
+    {
+        entity_types[i].id = 0;
+        entity_types[i].width = 0;
+        entity_types[i].height = 0;
+        entity_types[i].render = NULL;
+        entity_types[i].update = NULL;
+        entity_types[i].advance = NULL;
+        entity_types[i].collide = NULL;
+        entity_types[i].get_x_vel = get_x_vel;
+        entity_types[i].get_y_vel = get_y_vel;
+        entity_types[i].interactable = 0;
+        entity_types[i].interact = NULL;
+        entity_types[i].control = 0;
+        entity_types[i].spur = 0;
+        entity_types[i].slope = 0;
+    }
+}

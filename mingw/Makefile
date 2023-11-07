@@ -14,10 +14,13 @@ LIBS=-lmingw32 -lmariadb -lcrumbs -lSDL2main -lSDL2 -lSDL2_ttf -lSDL2_image -lSD
 # include the SDL header file.
 MAIN_DEF=-Dmain=SDL_main
 
-SRC=../*.c ../common/*.c ../entities/*.c ../input/*.c ../scenes/*.c ../util/*.c
+# When building on Windows, we will be connecting to the database remotely (on LAN).
+DEFS=-D"SLONG_REMOTE=1"
+
+SRC=../*.c ../common/*.c ../entities/*.c ../input/*.c ../scenes/*.c ../data/*.c
 
 all:
-	$(CC) $(MAIN_DEF) $(SRC) -o slong.exe $(INCLUDE_DIR) -mwindows $(LINK_DIR) $(LIBS)
+	$(CC) $(MAIN_DEF) $(DEFS) $(SRC) -o slong.exe $(INCLUDE_DIR) -mwindows $(LINK_DIR) $(LIBS)
 
 debug:
-	$(CC) -g $(MAIN_DEF) $(SRC) -o slong.exe $(INCLUDE_DIR) $(LINK_DIR) $(LIBS)
+	$(CC) -g $(MAIN_DEF) $(DEFS) $(SRC) -o slong.exe $(INCLUDE_DIR) $(LINK_DIR) $(LIBS)

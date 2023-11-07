@@ -9,37 +9,22 @@
 #include "common/collision.h"
 #include "common/dialog.h"
 
-static cr_entity entities[SL_MAX_ENTITIES];
-static cr_func input_handlers[SL_MAX_INPUT_HANDLERS];
-static cr_entity *menus[SL_MAX_MENUS];
-static cr_entity *dialogs[SL_MAX_DIALOGS];
-static cr_entity *overlays[SL_MAX_OVERLAYS];
-static cr_texture *textures[SL_MAX_TEXTURES];
-static cr_font *fonts[SL_MAX_FONTS];
-static cr_sound *sounds[SL_MAX_SOUNDS];
-static cr_entity_type entity_types[SL_ENTITY_TYPE_MAX];
+static cr_entity      entities       [SL_MAX_ENTITIES];
+static cr_func        input_handlers [SL_MAX_INPUT_HANDLERS];
+static cr_entity*     menus          [SL_MAX_MENUS];
+static cr_entity*     dialogs        [SL_MAX_DIALOGS];
+static cr_entity*     overlays       [SL_MAX_OVERLAYS];
+static cr_texture*    textures       [SL_MAX_TEXTURES];
+static cr_font*       fonts          [SL_MAX_FONTS];
+static cr_sound*      sounds         [SL_MAX_SOUNDS];
+static cr_entity_type entity_types   [SL_ENTITY_TYPE_MAX];
+static int            counters       [SL_COUNTER_MAX];
+static cr_entity*     entity_handles [SL_MAX_ENTITY_HANDLES];
+static cr_extension   extension;
 
-// 0 notes
-// 1 critters
-// 2 score
-// [3:10] critter slots (8 slots)
-static int counters[SL_COUNTER_MAX];
-static cr_entity *entity_handles[SL_MAX_ENTITY_HANDLES];
-static cr_extension extension;
-
-static int default_get_x_vel(cr_entity *e)
-{
-    return e->x_vel;
-}
-
-static int default_get_y_vel(cr_entity *e)
-{
-    return e->y_vel;
-}
-
-static void default_input_handler(cr_app *app)
-{
-}
+static int  default_get_x_vel(cr_entity *e) { return e->x_vel; }
+static int  default_get_y_vel(cr_entity *e) { return e->y_vel; }
+static void default_input_handler(cr_app *app) { }
 
 static void update(cr_app *app)
 {
@@ -197,23 +182,24 @@ int sl_init_app(cr_app *app)
     cr_set_title(app, "Slong");
 
     // default values for entity types
-    for (int i = 0; i < SL_ENTITY_TYPE_MAX; i++)
-    {
-        entity_types[i].id = 0;
-        entity_types[i].width = 0;
-        entity_types[i].height = 0;
-        entity_types[i].render = NULL;
-        entity_types[i].update = NULL;
-        entity_types[i].advance = NULL;
-        entity_types[i].collide = NULL;
-        entity_types[i].get_x_vel = default_get_x_vel;
-        entity_types[i].get_y_vel = default_get_y_vel;
-        entity_types[i].interactable = 0;
-        entity_types[i].interact = NULL;
-        entity_types[i].control = 0;
-        entity_types[i].spur = 0;
-        entity_types[i].slope = 0;
-    }
+    // for (int i = 0; i < SL_ENTITY_TYPE_MAX; i++)
+    // {
+    //     entity_types[i].id = 0;
+    //     entity_types[i].width = 0;
+    //     entity_types[i].height = 0;
+    //     entity_types[i].render = NULL;
+    //     entity_types[i].update = NULL;
+    //     entity_types[i].advance = NULL;
+    //     entity_types[i].collide = NULL;
+    //     entity_types[i].get_x_vel = default_get_x_vel;
+    //     entity_types[i].get_y_vel = default_get_y_vel;
+    //     entity_types[i].interactable = 0;
+    //     entity_types[i].interact = NULL;
+    //     entity_types[i].control = 0;
+    //     entity_types[i].spur = 0;
+    //     entity_types[i].slope = 0;
+    // }
+    util_init_entity_types(&(entity_types[0]), default_get_x_vel, default_get_y_vel);
 
     // default values of entities
     for (int i = 0; i < SL_MAX_ENTITIES; i++)
@@ -257,13 +243,13 @@ int sl_init_app(cr_app *app)
     app->update = update;
     app->draw = draw;
 
-    // asset loading
+    // Load all assets.
     if (!sl_load_all_assets(app))
     {
         return 0;
     }
 
-    // extension initialization
+    // Initialize the extension structure.
     for (int i = 0; i < SL_COUNTER_MAX; i++)
     {
         counters[i] = 0;
@@ -272,14 +258,14 @@ int sl_init_app(cr_app *app)
     extension.entity_handles = entity_handles;
     app->extension = &extension;
 
-    // entity type registration
+    // Register the entity types.
     sl_register_ball(&(app->entity_types[SL_ENTITY_TYPE_BALL]));
     sl_register_paddle(&(app->entity_types[SL_ENTITY_TYPE_PADDLE]));
     sl_register_court(&(app->entity_types[SL_ENTITY_TYPE_COURT]));
     sl_register_boundary(&(app->entity_types[SL_ENTITY_TYPE_BOUNDARY]));
     sl_register_main_menu(&(app->entity_types[SL_ENTITY_TYPE_MAIN_MENU]));
 
-    // push the default input handler
+    // Push the default input handler.
     cr_push_input_handler(app, default_input_handler);
 
     // Load the initial scene.

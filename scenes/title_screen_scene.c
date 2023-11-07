@@ -1,9 +1,8 @@
 #include "slong.h"
+#include "common/util.h"
+#include "entities/entity_types.h"
 #include "input/input.h"
 #include "scenes/scenes.h"
-#include "entities/entity_types.h"
-
-#include "common/util.h"
 
 void sl_load_title_screen(cr_app *app)
 {    

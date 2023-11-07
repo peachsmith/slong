@@ -1,22 +1,15 @@
 #include "slong.h"
-#include "entities/entity_types.h"
-
 #include "common/util.h"
+#include "entities/entity_types.h"
 
 static void render_paddle(cr_app *app, cr_entity *paddle)
 {
     if (paddle->data)
     {
-
         if (paddle->ticks < 60)
         {
             cr_font *font = app->fonts[SL_FONT_KENNY_PIXEL];
-
-            cr_draw_text(app,
-                         font,
-                         "HOUSE RULES!",
-                         paddle->x_pos - 60,
-                         80);
+            cr_draw_text(app, font, "HOUSE RULES!", paddle->x_pos - 60, 80);
         }
 
         return;
@@ -35,15 +28,11 @@ static void render_paddle(cr_app *app, cr_entity *paddle)
 
 static void update_paddle(cr_app *app, cr_entity *paddle)
 {
-    if (paddle->data)
-    {
-        paddle->ticks++;
+    if (!paddle->data) return;
 
-        if (paddle->ticks > 120)
-        {
-            paddle->present = 0;
-        }
-    }
+    paddle->ticks++;
+
+    if (paddle->ticks > 120) paddle->present = 0;
 }
 
 void sl_register_paddle(cr_entity_type *t)
@@ -58,11 +47,7 @@ cr_entity *sl_create_paddle(cr_app *app, int x, int y)
 {
     cr_entity *paddle = NULL;
 
-    paddle = cr_create_entity(app);
-    if (paddle == NULL)
-    {
-        return NULL;
-    }
+    if ((paddle = cr_create_entity(app)) == NULL) return NULL;
 
     paddle->type = SL_ENTITY_TYPE_PADDLE;
     paddle->x_pos = x;

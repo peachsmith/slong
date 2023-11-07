@@ -14,11 +14,14 @@ LIBS="libmariadb.lib" "crumbs.lib" "SDL2.lib" "SDL2main.lib" "SDL2_ttf.lib" "SDL
 # include the SDL header file.
 MAIN_DEF=/D"main=SDL_main"
 
-SRC=*.c common/*.c entities/*.c input/*.c scenes/*.c util/*.c
+# When building on Windows, we will be connecting to the database remotely (on LAN).
+DEFS=/D"SLONG_REMOTE=1"
+
+SRC=*.c common/*.c entities/*.c input/*.c scenes/*.c data/*.c
 
 all:
-	$(CC) $(CFLAGS) $(MAIN_DEF) $(INCLUDE_DIR) $(SRC) /link $(LIBS) $(LINK_DIR) /SUBSYSTEM:WINDOWS -out:slong.exe
+	$(CC) $(CFLAGS) $(MAIN_DEF) $(DEFS) $(INCLUDE_DIR) $(SRC) /link $(LIBS) $(LINK_DIR) /SUBSYSTEM:WINDOWS -out:slong.exe
 	del *.obj
 
 debug:
-	$(CC) /JMC $(CFLAGS) /D"_DEBUG" $(MAIN_DEF) $(INCLUDE_DIR) $(SRC) /link $(LIBS) $(LINK_DIR) /SUBSYSTEM:CONSOLE -out:slong.exe
+	$(CC) /JMC $(CFLAGS) /D"_DEBUG" $(MAIN_DEF) $(DEFS) $(INCLUDE_DIR) $(SRC) /link $(LIBS) $(LINK_DIR) /SUBSYSTEM:CONSOLE -out:slong.exe

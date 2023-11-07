@@ -2,6 +2,7 @@
 #define COMMON_UTIL_H
 
 #include "slong.h"
+#include "entities/entity_types.h"
 
 // entity flags
 #define ENTITY_FLAG_GROUND 0
@@ -96,14 +97,21 @@ void util_set_camera(cr_app *, int);
 
 /**
  * Verifies that an entity is actually within the visibile boundary.
- * 
+ *
  * Params:
  *   cr_app* - a pointer to an app struct
  *   cr_entity* - the entity whose position will be verified
- * 
+ *
  * Returns:
  *   int - 1 if the entity is on screen, otherwise 0
  */
 int util_is_on_screen(cr_app *, cr_entity *);
+
+void util_init_entities(cr_entity **);
+
+void util_init_entity_types(
+    cr_entity_type *,
+    int (*get_x_vel)(cr_entity *),
+    int (*get_y_vel)(cr_entity *));
 
 #endif

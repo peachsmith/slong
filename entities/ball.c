@@ -1,17 +1,15 @@
 #include "slong.h"
-#include "entities/entity_types.h"
-
-#include "common/util.h"
 #include "common/collision.h"
+#include "common/util.h"
+#include "entities/entity_types.h"
 
 static int get_ball_x_vel(cr_entity *ball)
 {
     if (ball->x_vel > 1 || ball->x_vel < 1)
     {
         if (!(ball->ticks % ball->x_vel))
-        {
             return ball->x_vel > 0 ? 1 : -1;
-        }
+
         return 0;
     }
 
@@ -23,9 +21,8 @@ static int get_ball_y_vel(cr_entity *ball)
     if (ball->y_vel > 1 || ball->y_vel < 1)
     {
         if (!(ball->ticks % ball->y_vel))
-        {
             return ball->y_vel > 0 ? 1 : -1;
-        }
+
         return 0;
     }
 
@@ -34,10 +31,7 @@ static int get_ball_y_vel(cr_entity *ball)
 
 static void render_ball(cr_app *app, cr_entity *ball)
 {
-    if (!util_is_on_screen(app, ball))
-    {
-        return;
-    }
+    if (!util_is_on_screen(app, ball)) return;
 
     cr_rect r = {
         .x = ball->x_pos,
@@ -52,10 +46,7 @@ static void render_ball(cr_app *app, cr_entity *ball)
 
 static void update_ball(cr_app *app, cr_entity *ball)
 {
-    if (app->ticks % 5)
-    {
-        return;
-    }
+    if (app->ticks % 5) return;
 
     cr_entity **handles = app->extension->entity_handles;
     int x_vel = app->entity_types[ball->type].get_x_vel(ball);
@@ -67,14 +58,8 @@ static void update_ball(cr_app *app, cr_entity *ball)
     if (!util_is_on_screen(app, ball))
     {
         // Increment the appropriate score counter.
-        if (ball->x_pos < 100)
-        {
-            handles[SL_HANDLE_PLAYER_2]->cursor_x++;
-        }
-        if (ball->x_pos >= 100)
-        {
-            handles[SL_HANDLE_PLAYER_1]->cursor_x++;
-        }
+        if (ball->x_pos < 100) handles[SL_HANDLE_PLAYER_2]->cursor_x++;
+        if (ball->x_pos >= 100) handles[SL_HANDLE_PLAYER_1]->cursor_x++;
 
         // Reset the ball
         ball->x_pos = 115;
@@ -82,10 +67,8 @@ static void update_ball(cr_app *app, cr_entity *ball)
         ball->ticks = 0;
         ball->x_vel = -ball->x_vel;
         ball->y_vel = (rand() % 6) - 3;
-        if (ball->y_vel == 0)
-        {
-            ball->y_vel = -1;
-        }
+
+        if (ball->y_vel == 0) ball->y_vel = -1;
     }
 
     ball->ticks++;
@@ -97,20 +80,9 @@ static void collide_ball(
     cr_entity *other,
     cr_collision *t_res)
 {
-    if (other->data)
-    {
-        return;
-    }
-
-    if (t_res->cn.x)
-    {
-        ball->x_vel = -ball->x_vel;
-    }
-
-    if (t_res->cn.y)
-    {
-        ball->y_vel = -ball->y_vel;
-    }
+    if (other->data) return;
+    if (t_res->cn.x) ball->x_vel = -ball->x_vel;
+    if (t_res->cn.y) ball->y_vel = -ball->y_vel;
 }
 
 void sl_register_ball(cr_entity_type *t)
@@ -129,11 +101,7 @@ cr_entity *sl_create_ball(cr_app *app, int x, int y)
 {
     cr_entity *ball = NULL;
 
-    ball = cr_create_entity(app);
-    if (ball == NULL)
-    {
-        return NULL;
-    }
+    if ((ball = cr_create_entity(app)) == NULL) return NULL;
 
     ball->type = SL_ENTITY_TYPE_BALL;
     ball->x_pos = x;
